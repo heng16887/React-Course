@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise: React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="01-react-basics.js"></script>
+    <script src="https://unpkg.com/supersimpledev/dayjs.js">
+    </script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      // Exercise 1g
+      const currentDate = dayjs().format('MMM D');
+      // Exercise 1h
+      const currentTime = dayjs().format("HH:mm:ss");
+
+      const div = (
+        <div>
+          <p>Exercise 1a</p>
+          <button>Good Job</button>
+          <hr></hr>
+
+          <p>Exercise 1b</p>
+          <p>My name is HENG</p>
+          <hr></hr>
+
+          <p>Exercise 1c-1e</p>
+          <p>Cotton socks</p>
+          <p>Price: ${productCost}</p>
+          <button>Add to Cart</button>
+          <hr></hr>
+
+          <p>Exercise 1f</p>
+          <p>Product cost: ${productCost}</p>
+          <p>Shipping cost: ${shippingCost}</p>
+          <p>Total cost: ${totalCost}</p>
+          <button>Place your order</button>
+          <hr></hr>
+
+          <p>Exercise 1h</p>
+          <p>Today is {currentDate}</p>
+          <hr></hr>
+
+          <p>Exercise 1i</p>
+          <p>Current time: {currentTime}</p>
+          <hr></hr>
+        </div>
+      );
+
+      const container = document.querySelector('.js-container');
+      // Exercise 1j
+      const root = ReactDOM.createRoot(container);
+      // root.render(div);
+
+      setInterval(() => {
+        // Exercise 1h
+        const currentTime = dayjs().format("HH:mm:ss");
+        root.render(currentTime);
+      }, 1000);
+    </script>
+  </body>
+</html>
