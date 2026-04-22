@@ -14,6 +14,7 @@
       function ChatInput(){
         return (
           <>
+          
             <input 
                   placeholder='Send a message to Chatbot' 
                   size='30'
@@ -44,6 +45,7 @@
         return (
           // && Guard Operator = this was a shortcut for if-statement in JSX
           <div>
+            
             {sender === 'robot' && (
               <img src='robot.png' width='50'/>
             )}
@@ -58,6 +60,10 @@
       function App(){
         return (
           <>
+          <div>
+            <a href="../lesson3/chatbot.html">Next Version of this project</a>
+          </div>
+
             <ChatInput />
             <ChatMessage 
               message="hello chatbot" 
