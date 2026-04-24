@@ -15,12 +15,32 @@
     <script type="text/babel">
       function ChatInput({chatMessages, setChatMessages}){
         const [inputText, setInputText] = React.useState('');
+        const [isLoading, setLoading] = React.useState(false);
 
         function saveInputText(event){
+          // Exercise 3j: pressed Escape to clear the text
+          if(event.key === 'Escape'){
+            event.target.value = '';
+          }
+
+          // Exercise 3i: pressed Enter to send the message
+          if(event.key === 'Enter'){
+            sendMessage();
+          } 
+
           setInputText(event.target.value); // this gives us the element that we're typing in
         }
 
-        function sendMessage(){
+        // Exercise 3k-3l
+        async function sendMessage(){
+          setInputText(''); 
+          // Exercise 3m: don't send message if isLoading is loading and inputText is empty
+          if(isLoading || inputText === ''){
+            return;
+          }
+
+          setLoading(true);
+
           const newChatMessages = [
             ...chatMessages,
             {
@@ -29,9 +49,19 @@
               id: crypto.randomUUID()
             }
           ];
-          setChatMessages(newChatMessages);
+          // after we input the text, it will load first for a second and then chatbot will response
+          setChatMessages([
+            ...chatMessages,
+            {
+              message: 'Loading...',
+              sender: 'robot',
+              id: crypto.randomUUID()
+            }
+          ]);
 
-          const response = Chatbot.getResponse(inputText);
+          setInputText(''); 
+
+          const response = await Chatbot.getResponseAsync(inputText);
           setChatMessages([
             ...newChatMessages,
             {
@@ -41,6 +71,7 @@
             }
           ]);
 
+          setLoading(false);
           setInputText(''); // after texting, it will clear the text (this is controlled input)
         }
 
@@ -50,8 +81,10 @@
                   placeholder='Send a message to Chatbot' 
                   size='30'
                   onChange={saveInputText}
+                  onKeyDown={saveInputText}
                   value={inputText}
             />
+
             <button onClick={sendMessage}>Send</button>
           </>
         );
@@ -103,6 +136,7 @@
                 );
               })
             }
+            
           </>
         );
       }
