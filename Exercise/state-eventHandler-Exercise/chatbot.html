@@ -18,6 +18,10 @@
         const [isLoading, setLoading] = React.useState(false);
 
         function saveInputText(event){
+          setInputText(event.target.value); // this gives us the element that we're typing in
+        }
+
+        function handleEvent(event){
           // Exercise 3j: pressed Escape to clear the text
           if(event.key === 'Escape'){
             event.target.value = '';
@@ -27,19 +31,18 @@
           if(event.key === 'Enter'){
             sendMessage();
           } 
-
-          setInputText(event.target.value); // this gives us the element that we're typing in
         }
 
         // Exercise 3k-3l
         async function sendMessage(){
-          setInputText(''); 
           // Exercise 3m: don't send message if isLoading is loading and inputText is empty
           if(isLoading || inputText === ''){
             return;
           }
 
           setLoading(true);
+
+          setInputText(''); 
 
           const newChatMessages = [
             ...chatMessages,
@@ -72,7 +75,7 @@
           ]);
 
           setLoading(false);
-          setInputText(''); // after texting, it will clear the text (this is controlled input)
+          // setInputText(''); // after texting, it will clear the text (this is controlled input)
         }
 
         return (
@@ -81,7 +84,7 @@
                   placeholder='Send a message to Chatbot' 
                   size='30'
                   onChange={saveInputText}
-                  onKeyDown={saveInputText}
+                  onKeyDown={handleEvent}
                   value={inputText}
             />
 
