@@ -1,7 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>React State, Event Handler Exercise </title>
+    <title>COUNTER PROJECT (4h-4i)</title>
+    <style>
+      body {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: Arial;
+      }
+      .button-count-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: rgb(222, 222, 222);
+      }
+
+      button {
+        background-color: rgb(25, 135, 84);
+        color: white;
+        border: none;
+        margin-right: 5px;
+        padding: 5px 10px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <div class="js-container"></div>
@@ -11,52 +35,43 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-      // Exercise 3a-3b
       function App(){
         const [count, setCount] = React.useState(0);
-        return (
-          <>
-            <Counter 
-              count={count}
-              setCount={setCount}
-            />
-            <Counter 
-              count={count}
-              setCount={setCount}
-            />
-            <ResetButton 
-              count={count}
-              setCount={setCount}
-            />
-          </>
-        );
-      }
-
-      function Counter({count, setCount}){
-        function increasment(){
+        const buttonElemRef = React.useRef(0);
+        
+        function increment(){
           setCount(c => c + 1);
         }
 
-        return (
-          <>
-            <button onClick={increasment}>
-              Clicked {count} {count === 1 ? 'time' : 'times'}
-            </button>
-          </>
-        );
-      }
-
-      function ResetButton({count, setCount}){
         function reset(){
           setCount(0);
         }
 
+        function autoClickCounter(){
+          setInterval(() => {
+            const buttonElem = buttonElemRef.current;
+            if(buttonElem){
+              buttonElem.click();
+            }
+          }, 1000);
+        }
+
         return (
-          <>
+          <div className='button-count-container'>
+            <button 
+              onClick={increment}
+              ref={buttonElemRef}>
+              Clicked {count} {count === 1 ? 'time' : 'times'}
+            </button>
             <button onClick={reset}>
               Reset
             </button>
-          </>
+            <button 
+              onClick={autoClickCounter}
+              >
+              Auto Click
+            </button>
+          </div>
         );
       }
 
