@@ -1,0 +1,14 @@
+{
+  
+  "scripts": {
+    "mktest": "mkdir test" 
+  },
+  
+  "scripts": {
+    "rmtest": "rmdir test"
+  },
+  
+  "dependencies": {
+    "supersimpledev": "^8.6.4"
+  }
+}
