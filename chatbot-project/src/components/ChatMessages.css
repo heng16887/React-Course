@@ -4,3 +4,9 @@
   overflow: scroll;
   scrollbar-width: none;
 }
+
+.welcome-chat-message {
+  font-size: 18px;
+  color: grey;
+  text-align: center;
+}
