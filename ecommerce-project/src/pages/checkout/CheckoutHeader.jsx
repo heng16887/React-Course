@@ -1,3 +1,5 @@
+// Exercise 6A and 6C
+
 import { Link } from 'react-router';
 import './CheckoutHeader.css';
 
