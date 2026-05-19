@@ -10,13 +10,13 @@ export function HomePage() {
 
   useEffect(() => {
     // TODO: Fetch products from the backend
-    axios.get("http://localhost:3000/api/products")
+    axios.get("/api/products")
       .then((response) => {
         setProducts(response.data);
       });
 
     // TODO: Fetch cart items from the backend to determine which products have been added to the cart
-    axios.get('http://localhost:3000/api/cart-items')
+    axios.get('/api/cart-items')
       .then((response) => {
           setCart(response.data)
       });
