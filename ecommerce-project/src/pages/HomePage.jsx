@@ -6,11 +6,19 @@ import "./HomePage.css";
 
 export function HomePage() {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
+    // TODO: Fetch products from the backend
     axios.get("http://localhost:3000/api/products")
       .then((response) => {
         setProducts(response.data);
+      });
+
+    // TODO: Fetch cart items from the backend to determine which products have been added to the cart
+    axios.get('http://localhost:3000/api/cart-items')
+      .then((response) => {
+          setCart(response.data)
       });
   }, []);
     
@@ -19,7 +27,7 @@ export function HomePage() {
       <link rel="icon" href="/home-favicon.png" />
       <title>Ecommerce Project</title>
 
-      <Header />
+      <Header cart={cart}/>
 
       <div className="home-page">
         <div className="products-grid">
