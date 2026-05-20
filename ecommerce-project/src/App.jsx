@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     // TODO: Fetch cart items from the backend to determine which products have been added to the cart
-    axios.get("/api/cart-items").then((response) => {
+    axios.get("/api/cart-items?expand=product").then((response) => {
       setCart(response.data);
     });
   });
