@@ -7,13 +7,16 @@ import "./HomePage.css";
 export function HomePage({ cart }) {
   const [products, setProducts] = useState([]);
   
-
+  // Note: if we add async in inner function in react, it has a problem (break rule in useEffect) and by using async in inner function, it should not return a Promise. 
+  // Example: useEffect(async () => {}) --> break rule    
   useEffect(() => {
-    // TODO: Fetch products from the backend
-    axios.get("/api/products")
-      .then((response) => {
-        setProducts(response.data);
-      });
+    const getHomeData = async () => {
+      // TODO: Fetch products from the backend
+      const response = await axios.get("/api/products");
+      setProducts(response.data);
+    };
+
+    getHomeData();
   }, []);
     
   return (

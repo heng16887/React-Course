@@ -13,10 +13,13 @@ function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    // TODO: Fetch cart items from the backend to determine which products have been added to the cart
-    axios.get("/api/cart-items?expand=product").then((response) => {
+    const fetchAppData = async () => {
+      // TODO: Fetch cart items from the backend to determine which products have been added to the cart
+      const response = await axios.get("/api/cart-items?expand=product");
       setCart(response.data);
-    });
+    }
+
+    fetchAppData();
   });
 
   return (
