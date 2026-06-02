@@ -8,7 +8,6 @@ export function OrderSummary({deliveryOptions, cart}) {
       {deliveryOptions.length > 0 &&
         cart.map((cartItem) => {
           
-
           return (
             <div key={cartItem.productId} className="cart-item-container">
               <DeliveryDate deliveryOptions={deliveryOptions} cartItem={cartItem}/>
