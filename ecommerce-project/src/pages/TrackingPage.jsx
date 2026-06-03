@@ -9,6 +9,10 @@ export function TrackingPage({cart}) {
   // Exercise 7k
   const [order, setOrder] = useState(null);
   const { orderId, productId } = useParams();
+  // Exercise 7n: hightlight the correct label
+  let isPreparing;
+  let isShipped;
+  let isDelivered;
 
   useEffect(() => {
     const orderData = async () => {
@@ -39,6 +43,19 @@ export function TrackingPage({cart}) {
     deliveryPercent = 100;
   }
 
+  // Exercise 7n: check each progress label if it is the current status
+  if (deliveryPercent < 33) {
+    isPreparing = true;
+  }
+
+  if (deliveryPercent >= 33 && deliveryPercent < 100) {
+    isShipped = true;
+  }
+
+  if (deliveryPercent === 100) {
+    isDelivered = true;
+  }
+
   return (
     <>
       <link rel="icon" href="/tracking-favicon.png" />
@@ -53,7 +70,8 @@ export function TrackingPage({cart}) {
           </Link>
 
           <div className="delivery-date">
-            {deliveryPercent >= 100 ? "Delivered On" : "Arriving On"}: {dayjs(order.deliveryDate).format("dddd, MMMM D")}
+            {deliveryPercent >= 100 ? "Delivered On" : "Arriving On"}:{" "}
+            {dayjs(order.deliveryDate).format("dddd, MMMM D")}
           </div>
 
           <div className="product-info">{orderProduct.product.name}</div>
@@ -63,9 +81,16 @@ export function TrackingPage({cart}) {
           <img className="product-image" src={orderProduct.product.image} />
 
           <div className="progress-labels-container">
-            <div className="progress-label">Preparing</div>
-            <div className="progress-label current-status">Shipped</div>
-            <div className="progress-label">Delivered</div>
+            <div
+              className={`progress-label ${isPreparing && "current-status"}`}>
+              Preparing
+            </div>
+            <div className={`progress-label ${isShipped && "current-status"}`}>
+              Shipped
+            </div>
+            <div className={`progress-label ${isDelivered && "current-status"}`}>
+              Delivered
+            </div>
           </div>
 
           <div className="progress-bar-container">
