@@ -53,7 +53,7 @@ export function TrackingPage({cart}) {
           </Link>
 
           <div className="delivery-date">
-            Arriving on {dayjs(order.deliveryDate).format("dddd, MMMM D")}
+            {deliveryPercent >= 100 ? "Delivered On" : "Arriving On"}: {dayjs(order.deliveryDate).format("dddd, MMMM D")}
           </div>
 
           <div className="product-info">{orderProduct.product.name}</div>
@@ -69,9 +69,10 @@ export function TrackingPage({cart}) {
           </div>
 
           <div className="progress-bar-container">
-            <div className="progress-bar"
-                 style={{width: `${deliveryPercent}%`}}>
-            </div>
+            <div
+              className="progress-bar"
+              style={{ width: `${deliveryPercent}%` }}
+            ></div>
           </div>
         </div>
       </div>
