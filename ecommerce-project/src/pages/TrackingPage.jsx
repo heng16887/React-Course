@@ -32,10 +32,13 @@ export function TrackingPage({cart}) {
   const orderProduct = order.products.find((orderProduct) => {
     return orderProduct.product.id === productId;
   });
+
   // Exercise 7l: get the total time for delivery
   const totalDeliveryTimeMs = orderProduct.estimatedDeliveryTimeMs - order.orderTimeMs;
+
   // Exercise 7l: get the time passed since the order was placed
   const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
+  
   // Exercise 7l: calculate the percentage of delivery progress
   let deliveryPercent = (timePassedMs / totalDeliveryTimeMs) * 100;
 
@@ -56,34 +59,8 @@ export function TrackingPage({cart}) {
     isDelivered = true;
   }
 
-  useEffect(() => {
-    const orderData = async () => {
-      const response = await axios.get(
-        `/api/orders/${orderId}?expand=products`,
-      );
-      setOrder(response.data);
-    };
-
-    orderData();
-  }, [orderId]);
-
   if (!order) {
     return null;
-  }
-
-  const orderProduct = order.products.find((orderProduct) => {
-    return orderProduct.product.id === productId;
-  });
-  // Exercise 7l: get the total time for delivery
-  const totalDeliveryTimeMs = orderProduct.estimatedDeliveryTImeMs - order.orderTimeMs;
-  // Exercise 7l: get the time passed since the order was placed
-  const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
-  // Exercise 7l: calculate the percentage of delivery progress
-  let deliveryPercent = (timePassedMs / totalDeliveryTimeMs) * 100;
-  console.log(deliveryPercent);
-
-  if(deliveryPercent > 100) {
-    deliveryPercent = 100;
   }
 
   return (
