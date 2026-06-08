@@ -4,7 +4,7 @@ import { Header } from "../../components/Header";
 import { ProductsGrid } from "./ProductsGrid";
 import "./HomePage.css";
 
-export function HomePage({ cart }) {
+export function HomePage({ cart, loadCart }) {
   const [products, setProducts] = useState([]);
   
   // Note: if we add async in inner function in react, it has a problem (break rule in useEffect) and by using async in inner function, it should not return a Promise. 
@@ -27,7 +27,7 @@ export function HomePage({ cart }) {
       <Header cart={cart}/>
 
       <div className="home-page">
-        <ProductsGrid products={products}/>
+        <ProductsGrid products={products} loadCart={loadCart}/>
       </div>
     </>
   );
