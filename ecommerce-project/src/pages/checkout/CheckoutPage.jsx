@@ -11,15 +11,20 @@ export function CheckoutPage({ cart, loadCart }) {
 
   useEffect(() => {
     const fetchCheckoutData = async () => {
-      let response = await axios
+      const response = await axios
         .get("/api/delivery-options?expand=estimatedDeliveryTime");
       setDeliveryOptions(response.data);
-      
-      response = await axios.get("/api/payment-summary");
+    }
+    fetchCheckoutData();
+  }, []);
+
+  // Exercise 8b: seperate the code that reloads teh payment summary
+  useEffect(() => {
+    const fetchPaymentData = async () => {
+      const response = await axios.get("/api/payment-summary");
       setPaymentSummary(response.data);
     }
-
-    fetchCheckoutData();
+    fetchPaymentData();
   }, [cart]);
 
   return (
