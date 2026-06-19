@@ -5,6 +5,8 @@ import CheckmarkIcon from "../../assets/images/icons/checkmark.png";
 
 export function Product({product, loadCart}) {
   const [quantity, setQuantity] = useState(1);
+  // exercise 8d: create (add button) interactive
+  const [addButton, setAddButton] = useState(false);
 
   const addToCart = async () => {
     // .post(): create data in the backend
@@ -13,6 +15,14 @@ export function Product({product, loadCart}) {
       quantity,
     });
     await loadCart();
+
+    // Exercise 8d: set the state to true and using setTimeout to make messages disappear after 2 seconds
+    setAddButton(true);
+
+    setTimeout(() => {
+      setAddButton(false);
+    }, 2000)
+
   };
 
   const selectQuantity = (event) => {
@@ -60,7 +70,8 @@ export function Product({product, loadCart}) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
+      <div className="added-to-cart"
+           style={{opacity: addButton ? 1 : 0}}>
         <img src={CheckmarkIcon} />
         Added
       </div>
