@@ -7,7 +7,10 @@ import { CheckoutPage } from './pages/checkout/CheckoutPage';
 import { OrdersPage } from './pages/orders/OrdersPage';
 import { TrackingPage } from './pages/TrackingPage';  
 import { NotFoundPage } from './components/NotFoundPage';
-import './App.css'
+import './App.css';
+
+// Exercise 8c
+window.axios = axios;
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -18,6 +21,7 @@ function App() {
     const response = await axios.get("/api/cart-items?expand=product");
     setCart(response.data);
   }
+
   useEffect(() => {
     loadCart();
   });
