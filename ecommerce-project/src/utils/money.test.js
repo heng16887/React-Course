@@ -19,6 +19,7 @@ describe('format Money', () => {
     expect(formatMoney(0)).toBe("$0.00");
   });
 
+  // 9b: test money with negative number
   it('work with negative number', () => {
     expect(formatMoney(-999)).toBe('$-9.99')
     expect(formatMoney(-100)).toBe('$-1.00')
