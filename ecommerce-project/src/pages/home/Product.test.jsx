@@ -79,11 +79,22 @@ describe('Product component', () => {
 
     // 9d: set up the user and test to update the quantity selector
     const user = userEvent.setup();
+    const addToCartButton = screen.getByTestId("add-to-cart-button");
     const selectQuantity = screen.getByTestId("quantitySelector");
     expect(selectQuantity).toHaveValue("1");
 
     // update the quantity selector
     await user.selectOptions(selectQuantity, "3");
+
+    // 9e: testing an update the value of the quantity selector
+    await user.click(addToCartButton);
+    // click the add to cart and check axios.post was called with the correct values (quantity: 3)
+    expect(axios.post).toHaveBeenCalledWith("/api/cart-items", {
+      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      quantity: 3,
+    });
+    // check the loadCart was called
+    expect(loadCart).toHaveBeenCalled();
     // check the quantity selector's value to '3'
     expect(selectQuantity).toHaveValue("3");
   });
