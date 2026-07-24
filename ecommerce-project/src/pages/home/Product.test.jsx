@@ -1,9 +1,14 @@
 import { it, expect, describe, vi} from "vitest";
 import {render, screen} from '@testing-library/react';
 // screen = check the fake web page
+import userEvent from '@testing-library/user-event';
+import axios from "axios";
 import { Product } from "./Product";
 
+vi.mock('axios');
+
 describe('Product component', () => {
+  // this is Integration test
   it('displays the product details correctly', () => {
     // to testing component, we need to use render()
     // render() = display the component on the page
@@ -46,5 +51,32 @@ describe('Product component', () => {
     expect(
       screen.getByText('87')
     ).toBeInTheDocument();
+  });
+
+  // this is user interaction test
+  it('adds a product to the cart', async () => {
+    const product = {
+      id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+      name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+      rating: {
+        stars: 4.5,
+        count: 87,
+      },
+      priceCents: 1090,
+      keywords: ["socks", "sports", "apparel"],
+    };
+    const loadCart = vi.fn();
+    render(<Product product={product} loadCart={loadCart} />);
+
+    const user = userEvent.setup();
+    const addToCartButton = screen.getByTestId("add-to-cart-button");
+
+    await user.click(addToCartButton); // this line is asychronous code (it returns a Promise)
+    expect(axios.post).toHaveBeenCalledWith("/api/cart-items", {
+      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      quantity: 1
+    });
+    expect(loadCart).toHaveBeenCalled();
   });
 });
