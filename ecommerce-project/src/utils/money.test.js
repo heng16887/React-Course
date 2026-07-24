@@ -13,4 +13,9 @@ describe('format Money', () => {
     expect(formatMoney(1090)).toBe('$10.90');
     expect(formatMoney(100)).toBe('$1.00');
   }); // passed
+
+  // 9a: test money with 0
+  it('work with the number 0', () => {
+    expect(formatMoney(0)).toBe("$0.00");
+  });
 }); 

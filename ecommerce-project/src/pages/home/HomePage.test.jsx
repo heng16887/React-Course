@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 // MemoryRouter = specifically for testing
 import { MemoryRouter } from "react-router";
 // screen = check the fake web page
-import userEvent from "@testing-library/user-event";
+// import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import { HomePage } from "./HomePage";
 
