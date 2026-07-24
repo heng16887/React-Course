@@ -71,4 +71,13 @@ describe('Product component', () => {
     });
     expect(loadCart).toHaveBeenCalled();
   });
+
+  // 9c: add test id and check the quantity selector
+  it('can select a quantity', () => {
+    render(<Product product={product} loadCart={loadCart}/>)
+
+    const selectQuantity = screen.getByTestId('quantitySelector');
+    
+    expect(selectQuantity).toHaveValue('1');
+  });
 });
