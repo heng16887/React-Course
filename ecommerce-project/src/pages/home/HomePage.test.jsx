@@ -1,6 +1,7 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";
 // within() = lets us find things within a specific element
 import { render, screen, within } from "@testing-library/react";
+import { userEvent } from '@testing-library/user-event';
 // MemoryRouter = specifically for testing
 import { MemoryRouter } from "react-router";
 // screen = check the fake web page
@@ -67,5 +68,37 @@ describe('HomePage Component', () => {
     expect(
       within(productContainers[1]).getByText("Intermediate Size Basketball"),
     ).toBeInTheDocument();
+  });
+
+  // 9g: testing add to cart button whether it work or not
+  it('work on add to cart button', async() => {
+    render(
+      <MemoryRouter>
+        <HomePage cart={[]} loadCart={loadCart} />
+      </MemoryRouter>
+    );
+
+    const productContainers = await screen.findAllByTestId('product-container');
+    const user = userEvent.setup();
+
+    await user.click(
+      within(productContainers[0]).getByTestId("add-to-cart-button")
+    );
+
+    await user.click(
+      within(productContainers[1]).getByTestId("add-to-cart-button"),
+    );
+
+    
+    expect(axios.post).toHaveBeenNthCalledWith(1, "/api/cart-items", {
+      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      quantity: 1,
+    });
+    expect(axios.post).toHaveBeenNthCalledWith(2, "/api/cart-items", {
+      productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+      quantity: 1,
+    });
+    
+    expect(loadCart).toHaveBeenCalledTimes(2);
   });
 });
