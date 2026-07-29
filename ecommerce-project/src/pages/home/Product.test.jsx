@@ -76,12 +76,10 @@ describe('Product component', () => {
   });
 
   // 9c: add test id and check the quantity selector
-  
   it('can select a quantity', async() => {
     render(<Product product={product} loadCart={loadCart} />);
 
     // 9d: set up the user and test to update the quantity selector
-    
     const addToCartButton = screen.getByTestId("add-to-cart-button");
     const selectQuantity = screen.getByTestId("quantitySelector");
     expect(selectQuantity).toHaveValue("1");
