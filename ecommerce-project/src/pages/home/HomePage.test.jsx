@@ -78,8 +78,13 @@ describe('HomePage Component', () => {
       </MemoryRouter>
     );
 
-    const productContainers = await screen.findAllByTestId('product-container');
     const user = userEvent.setup();
+    const productContainers = await screen.findAllByTestId('product-container');
+    const selectQuantity = await screen.findAllByTestId("quantitySelector");
+    
+    // 9h: test to update the quantity selector
+    await user.selectOptions(selectQuantity[0], "2");
+    await user.selectOptions(selectQuantity[1], "3");
 
     await user.click(
       within(productContainers[0]).getByTestId("add-to-cart-button")
@@ -89,14 +94,13 @@ describe('HomePage Component', () => {
       within(productContainers[1]).getByTestId("add-to-cart-button"),
     );
 
-    
     expect(axios.post).toHaveBeenNthCalledWith(1, "/api/cart-items", {
       productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-      quantity: 1,
+      quantity: 2,
     });
     expect(axios.post).toHaveBeenNthCalledWith(2, "/api/cart-items", {
       productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-      quantity: 1,
+      quantity: 3,
     });
     
     expect(loadCart).toHaveBeenCalledTimes(2);
