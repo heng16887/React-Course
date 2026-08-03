@@ -20,11 +20,11 @@ export function CheckoutPage({ cart, loadCart }) {
 
   // Exercise 8b: seperate the code that reloads teh payment summary
   useEffect(() => {
-    const fetchPaymentData = async () => {
+    const fetchpaymentSummary = async () => {
       const response = await axios.get("/api/payment-summary");
       setPaymentSummary(response.data);
     }
-    fetchPaymentData();
+    fetchpaymentSummary();
   }, [cart]);
 
   return (
