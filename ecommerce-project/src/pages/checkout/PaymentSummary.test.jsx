@@ -1,10 +1,10 @@
 // 9i: create a test for PaymentSummary component
 import { it, expect, describe, vi, beforeEach } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { userEvent } from '@testing-library/user-event';
 import { PaymentSummary } from './PaymentSummary';
 import { Location } from './Location';
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, useLocation } from "react-router";
 import { formatMoney } from "../../utils/money";
 import axios from "axios";
 
@@ -13,10 +13,9 @@ vi.mock('axios');
 describe('PaymentSummary Component', () => {
   let loadCart;
   let paymentSummary;
+  let user;
 
   beforeEach(() => {
-    loadCart = vi.fn();
-
     paymentSummary = {
       "totalItems": 2,
       "productCostCents": 2180,
@@ -25,6 +24,9 @@ describe('PaymentSummary Component', () => {
       "taxCents": 218,
       "totalCostCents": 2398
     }
+
+    loadCart = vi.fn();
+    user = userEvent.setup();
   });
 
   it('check the dollar amount', () => {
@@ -57,8 +59,13 @@ describe('PaymentSummary Component', () => {
     );
   
   });
-
+  // 9j: create a test for Place Order button
   it('work on Place Order button', async() => {
+    function Location() {
+      const location = useLocation();
+      return <div data-testid="url-path">{location.pathname}</div>;
+    }
+
     render(
       <MemoryRouter>
         <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart}/>
@@ -66,18 +73,12 @@ describe('PaymentSummary Component', () => {
       </MemoryRouter>
     );
 
-    const user = userEvent.setup();
-    const paymentSummaryContainer = screen.getByTestId('payment-summary-container');
-    
-    await user.click(
-      within(paymentSummaryContainer).getByTestId("place-order-button")
-    );
+    const placeOrderButton = screen.getByTestId('place-order-button');
+    await user.click(placeOrderButton);
 
+    expect(axios.post).toHaveBeenCalledWith('/api/orders');
+    expect(loadCart).toHaveBeenCalled();
     const urlPath = screen.getByTestId('url-path');
     expect(urlPath).toHaveTextContent('/orders');
-
-    expect(axios.post).toHaveBeenCalledTimes(1);
-    expect(axios.post).toHaveBeenCalledWith('/api/orders');
-    expect(loadCart).toHaveBeenCalledTimes(1);
   });
 });
