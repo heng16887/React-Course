@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Chatbot } from "supersimpledev";
+import robotImage from './assets/robot.png';
 import ChatInput from './components/ChatInput';
 import ChatMessage from './components/ChatMessage';
 import ChatMessages from './components/ChatMessages';
@@ -33,14 +34,18 @@ function App() {
   }, [chatMessages]);
 
   return (
-    <div className="app-container">
-      <ChatMessages 
-        chatMessages={chatMessages} />
-      <ChatInput
-        chatMessages={chatMessages}
-        setChatMessages={setChatMessages}        
-      />
-    </div>
+    <>
+      <link rel="icon" type="image/png" href={robotImage} />
+      <title>Chatbot Project</title>
+
+      <div className="app-container">
+        <ChatMessages chatMessages={chatMessages} />
+        <ChatInput
+          chatMessages={chatMessages}
+          setChatMessages={setChatMessages}
+        />
+      </div>
+    </>
   );
 }
 
