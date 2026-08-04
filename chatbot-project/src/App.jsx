@@ -10,6 +10,7 @@ function App() {
   const [chatMessages, setChatMessages] = useState(
     JSON.parse(localStorage.getItem('messages')) || []
   );
+  const [title, setTitle] = useState("Chatbot Project");
   
   // Array Destructuring
   // const [chatMessages, setChatMessages] =  array;
@@ -33,10 +34,18 @@ function App() {
     localStorage.setItem('messages', JSON.stringify(chatMessages));
   }, [chatMessages]);
 
+  useEffect(() => {
+    const numMessages = chatMessages.length;
+    if(numMessages === 0) 
+      setTitle("Chatbot Project");
+    else 
+      setTitle(`${numMessages} Messages`);
+  }, [chatMessages.length]);
+
   return (
     <>
       <link rel="icon" type="image/png" href={robotImage} />
-      <title>Chatbot Project</title>
+      <title>{title}</title>
 
       <div className="app-container">
         <ChatMessages chatMessages={chatMessages} />
