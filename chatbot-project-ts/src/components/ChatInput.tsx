@@ -3,18 +3,35 @@ import { Chatbot } from "supersimpledev";
 import loadingSpinner from "../assets/loading-spinner.gif";
 import './ChatInput.css';
 import dayjs from "dayjs";
+import ChatMessages from "./ChatMessages";
 
-export function ChatInput({ chatMessages, setChatMessages }) {
+type ChatMessages = {
+  id: string;
+  message: string | React.JSX.Element;
+  sender: string;
+  time: number;
+}[]; 
+
+type ChatInputProps = {
+  chatMessages: ChatMessages;
+  setChatMessages: (chatMessages: ChatMessages) => void;
+};
+
+export function ChatInput({ chatMessages, setChatMessages }: ChatInputProps) {
   const [inputText, setInputText] = useState("");
   const [isLoading, setLoading] = useState(false);
   
-  function saveInputText(event) {
+  function saveInputText(event: 
+    {target: 
+      {value: string;
+  }}) {
     setInputText(event.target.value); // this gives us the element that we're typing in
   }
 
-  function handleEvent(event){
+  function handleEvent(event: React.KeyboardEvent<HTMLInputElement>){
     if(event.key === 'Escape')
-        event.target.value = '';
+      // if you see value (red line), you can also add this (event.target as HTMLInputElement) because typescript reads (value) as HTML input element.
+      event.currentTarget.value = '';
 
     if(event.key === 'Enter')
       sendMessage();
@@ -74,7 +91,7 @@ export function ChatInput({ chatMessages, setChatMessages }) {
     <div className="chat-input-container">
       <input
         placeholder="Send a message to Chatbot"
-        size="30"
+        size={30}
         onChange={saveInputText}
         onKeyDown={handleEvent}
         value={inputText}
