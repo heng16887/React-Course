@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react'
 import { Chatbot } from "supersimpledev";
 import robotImage from './assets/robot.png';
 import ChatInput from './components/ChatInput';
-import ChatMessage from './components/ChatMessage';
+// import ChatMessage from './components/ChatMessage';
 import ChatMessages from './components/ChatMessages';
 import './App.css'
 
 function App() {
-  const [chatMessages, setChatMessages] = useState(
-    JSON.parse(localStorage.getItem('messages')) || []
+  const [chatMessages, setChatMessages] = useState(() => {
+    const saved = localStorage.getItem('messages');
+    return saved ? JSON.parse(saved) : [];
+  }
   );
   const [title, setTitle] = useState("Chatbot Project");
   
