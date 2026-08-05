@@ -2,9 +2,20 @@ import { useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import './ChatMessages.css';
 
-function ChatMessages({ chatMessages }) {
+type chatMessagesProps = {
+  chatMessages: {
+    id: string;
+    message: string;
+    sender: string;
+    time: number;
+  }[];
+};
+
+function ChatMessages({ chatMessages }: chatMessagesProps) {
   // useRef = automatically save an HTML element from the component. ref is the container with special React feature
-  const chatMessagesRef = useRef(null); // this is initial value
+
+  // In exercise 11i, because of typescript, the exercise said: use <> --> useRef<HTMLDivElement>(null) to fix an error of containerElem (line 20)
+  const chatMessagesRef = useRef<HTMLDivElement>(null); // this is initial value
 
   // useEffect = run code after component is created or updated
   useEffect(() => {
